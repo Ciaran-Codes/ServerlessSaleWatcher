@@ -1,19 +1,21 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using System.Net;
+using PriceTracker.Functions.Models;
+using PriceTracker.Functions.Services;
 
 namespace PriceTracker.Functions;
 
 public class SubmitProductFunction
 {
     private readonly ILogger<SubmitProductFunction> _logger;
+    private readonly StorageService _storage;
 
-    public SubmitProductFunction(ILogger<SubmitProductFunction> logger)
+    public SubmitProductFunction(ILogger<SubmitProductFunction> logger, StorageService storage)
     {
         _logger = logger;
+        _storage = storage;
     }
 
     [Function("SubmitProduct")]
@@ -24,9 +26,17 @@ public class SubmitProductFunction
 
         var request = await req.ReadFromJsonAsync<SubmitProductRequest>();
 
-        var response = req.CreateResponse(HttpStatusCode.OK);
-        await response.WriteStringAsync($"URL: {request?.ProductUrl}, Email: {request?.Email}");
+        if (request == null || string.IsNullOrWhiteSpace(request.ProductUrl) || string.IsNullOrWhiteSpace(request.Email))
+        {
+            var badResponse = req.CreateResponse(HttpStatusCode.BadRequest);
+            await badResponse.WriteStringAsync("Missing product URL or email.");
+            return badResponse;
+        }
 
+        await _storage.SaveSubscriptionAsync(request);
+
+        var response = req.CreateResponse(HttpStatusCode.OK);
+        await response.WriteStringAsync("Subscription saved.");
         return response;
     }
 }
