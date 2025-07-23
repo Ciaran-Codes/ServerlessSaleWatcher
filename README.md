@@ -8,7 +8,7 @@ This project demonstrates a modern serverless application using:
 
 - ✅ Azure Functions (.NET 8 Isolated)
 - ✅ Azure Table Storage
-- ✅ Azure Queue Storage
+- ✅ Azure Queue Storage (message enqueue + trigger function)
 - ✅ Logic Apps (SendGrid integration for notifications)
 - ✅ Blazor WebAssembly (SignalR real-time UI)
 - ✅ GitHub Actions for CI/CD
@@ -24,6 +24,7 @@ This project demonstrates a modern serverless application using:
 | Local testing via Postman           | ✅ Verified |
 | Table Storage integration           | ✅ Working |
 | Queue Storage integration           | ✅ Working |
+| Queue Trigger Function              | ✅ Working |
 | Logic App email flow                | ⏳ Planned |
 | Blazor WASM frontend (SignalR)      | ⏳ Planned |
 
@@ -45,6 +46,15 @@ Enqueues product details for further processing
 
 **Response:**  
 A simple 200 OK confirmation.
+
+---
+
+## Event-Driven Processing
+
+Once a product is submitted, it is:
+1. Stored in Azure Table Storage
+2. Queued via Azure Queue Storage
+3. Picked up by a Queue Trigger Function for processing (e.g., price check, notifications)
 
 ---
 
