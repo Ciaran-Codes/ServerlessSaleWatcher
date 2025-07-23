@@ -13,5 +13,6 @@ builder.Services
     .ConfigureFunctionsApplicationInsights();
 
 builder.Services.AddSingleton<StorageService>();
+builder.Services.AddSingleton<QueueService>();
 
 builder.Build().Run();

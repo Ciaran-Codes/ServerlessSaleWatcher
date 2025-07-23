@@ -22,14 +22,15 @@ This project demonstrates a modern serverless application using:
 | HTTP Trigger for product submission | ✅ Working |
 | Data model for submissions          | ✅ Working |
 | Local testing via Postman           | ✅ Verified |
-| Table Storage integration           | ⏳ Next Step |
-| Queue Storage integration           | ⏳ Coming Soon |
+| Table Storage integration           | ✅ Working |
+| Queue Storage integration           | ✅ Working |
 | Logic App email flow                | ⏳ Planned |
 | Blazor WASM frontend (SignalR)      | ⏳ Planned |
 
 ---
 
 ## Submit a Product (POST)
+Enqueues product details for further processing
 
 **URL:**  
 `POST /api/SubmitProduct`

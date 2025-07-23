@@ -11,11 +11,13 @@ public class SubmitProductFunction
 {
     private readonly ILogger<SubmitProductFunction> _logger;
     private readonly StorageService _storage;
+    private readonly QueueService _queue;
 
-    public SubmitProductFunction(ILogger<SubmitProductFunction> logger, StorageService storage)
+    public SubmitProductFunction(ILogger<SubmitProductFunction> logger, StorageService storage, QueueService queue)
     {
         _logger = logger;
         _storage = storage;
+        _queue = queue;
     }
 
     [Function("SubmitProduct")]
@@ -34,6 +36,7 @@ public class SubmitProductFunction
         }
 
         await _storage.SaveSubscriptionAsync(request);
+        await _queue.EnqueueSubmissionAsync(request);
 
         var response = req.CreateResponse(HttpStatusCode.OK);
         await response.WriteStringAsync("Subscription saved.");
