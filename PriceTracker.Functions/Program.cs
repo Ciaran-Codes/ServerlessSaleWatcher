@@ -2,6 +2,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PriceTracker.Functions.PriceCheckers;
 using PriceTracker.Functions.Services;
 
 var builder = FunctionsApplication.CreateBuilder(args);
@@ -14,5 +15,7 @@ builder.Services
 
 builder.Services.AddSingleton<StorageService>();
 builder.Services.AddSingleton<QueueService>();
+builder.Services.AddTransient<AmazonPriceChecker>();
+builder.Services.AddSingleton<PriceCheckerFactory>();
 
 builder.Build().Run();

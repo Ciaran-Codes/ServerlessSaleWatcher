@@ -68,6 +68,15 @@ Once a product is submitted, it is:
 
 ---
 
+## Price Checking Logic
+
+Each product is routed through a store-specific implementation of `IPriceChecker`.
+Currently supported: `Amazon` (mocked).
+
+The factory pattern allows for scalable resolution based on the product URL.
+
+---
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
