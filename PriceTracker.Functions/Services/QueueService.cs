@@ -23,6 +23,7 @@ public class QueueService
     public async Task EnqueueSubmissionAsync(SubmitProductRequest request)
     {
         var message = JsonSerializer.Serialize(request);
-        await _queueClient.SendMessageAsync(message);
+        var encodedMessage = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(message));
+        await _queueClient.SendMessageAsync(encodedMessage);
     }
 }
