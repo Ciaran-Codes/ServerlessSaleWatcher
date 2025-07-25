@@ -1,5 +1,10 @@
 ﻿# Serverless SaleWatcher
 
+![Deploy to Azure](https://github.com/Ciaran-Codes/ServerlessSaleWatcher/actions/workflows/master_PriceChecker.yml/badge.svg)
+![.NET](https://img.shields.io/badge/.NET-8.0-blue)
+![License](https://img.shields.io/github/license/Ciaran-Codes/ServerlessSaleWatcher)
+![Last Commit](https://img.shields.io/github/last-commit/Ciaran-Codes/ServerlessSaleWatcher)
+
 Track product prices and get notified when they drop — built entirely with Azure serverless architecture and Blazor WebAssembly.
 
 ## Project Overview
@@ -26,7 +31,7 @@ This project demonstrates a modern serverless application using:
 | Queue Storage integration           | ✅ Working |
 | Queue Trigger Function              | ✅ Working |
 | Logic App email flow                | ✅ Working |
-| CI/CD Pipeline                      | ⏳ Next up |
+| CI/CD Pipeline                      | ✅ Working |
 | Blazor WASM frontend (SignalR)      | ⏳ Planned |
 
 ---
