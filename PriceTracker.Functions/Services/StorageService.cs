@@ -27,4 +27,14 @@ public class StorageService
 
         await _tableClient.AddEntityAsync(entity);
     }
+
+    public async Task RemoveSubscriptionAsync(string email, string productUrl)
+    {
+        var entity = new ProductSubscriptionEntity
+        {
+            Email = email,
+            ProductUrl = productUrl
+        };
+        await _tableClient.DeleteEntityAsync(entity.PartitionKey, entity.RowKey);
+    }
 }
