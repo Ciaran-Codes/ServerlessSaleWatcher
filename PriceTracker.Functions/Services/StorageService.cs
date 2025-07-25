@@ -35,6 +35,6 @@ public class StorageService
             Email = email,
             ProductUrl = productUrl
         };
-        await _tableClient.DeleteEntityAsync(entity.PartitionKey, entity.RowKey);
+        await _tableClient.DeleteEntityAsync(entity);
     }
 }
