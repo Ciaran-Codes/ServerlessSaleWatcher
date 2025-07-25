@@ -18,7 +18,6 @@ builder.Services.AddSingleton<StorageService>();
 builder.Services.AddSingleton<QueueService>();
 builder.Services.AddTransient<AmazonPriceChecker>();
 builder.Services.AddSingleton<PriceCheckerFactory>();
-builder.Services.AddSingleton<NotificationService>();
 
 builder.Services.AddSingleton<ProcessSubmissionFunction>();
 

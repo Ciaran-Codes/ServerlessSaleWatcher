@@ -1,9 +1,9 @@
-using System.Net;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using PriceTracker.Functions.Models;
 using PriceTracker.Functions.Services;
+using System.Net;
 
 namespace PriceTracker.Functions;
 
