@@ -9,37 +9,36 @@ Track product prices and get notified when they drop — built entirely with Azu
 
 ## Project Overview
 
-This project demonstrates a modern serverless application using:
+This project demonstrates a modern, event-driven serverless application using:
 
-- ✅ Azure Functions (.NET 8 Isolated)
-- ✅ Azure Table Storage
-- ✅ Azure Queue Storage (message enqueue + trigger function)
-- ✅ Logic Apps (SendGrid integration for notifications)
-- ✅ Blazor WebAssembly (SignalR real-time UI)
-- ✅ GitHub Actions for CI/CD
+- ✅ **Azure Functions** (.NET 8 Isolated)
+- ✅ **Azure Table Storage**
+- ✅ **Azure Queue Storage** (submission + processing queues)
+- ✅ **Logic Apps** with **SendGrid** for notifications
+- ✅ **GitHub Actions** for push-to-deploy CI/CD
 
 ---
 
 ## Current Status
 
-| Feature                     | Status     |
-|----------------------------|------------|
-| HTTP Trigger for product submission | ✅ Working |
-| Data model for submissions          | ✅ Working |
+| Feature                             | Status     |
+|------------------------------------|------------|
+| Product submission endpoint         | ✅ Working |
+| Submission model + validation       | ✅ Working |
 | Local testing via Postman           | ✅ Verified |
 | Table Storage integration           | ✅ Working |
-| Queue Storage integration           | ✅ Working |
-| Queue Trigger Function              | ✅ Working |
-| Logic App email flow                | ✅ Working |
-| CI/CD Pipeline                      | ✅ Working |
-| Blazor WASM frontend (SignalR)      | ⏳ Planned |
+| Queue Storage (input/output)        | ✅ Working |
+| Queue-triggered processing function | ✅ Working |
+| Logic App for email notifications   | ✅ Working |
+| CI/CD pipeline to Azure             | ✅ Working |
+| Unsubscribe endpoint                | ✅ Working |
 
 ---
 
 ## Submit a Product (POST)
 Enqueues product details for further processing
 
-**URL:**  
+**Endpoint:**  
 `POST /api/SubmitProduct`
 
 **Body:**  
@@ -51,38 +50,49 @@ Enqueues product details for further processing
 ```
 
 **Response:**  
-A simple 200 OK confirmation.
+`200 OK`
 
 ---
 
-## Event-Driven Processing
+## Unsubscribe (GET)
+Unsubscribe a user from price alerts for a product.
 
-Once a product is submitted, it is:
-1. Stored in Azure Table Storage
-2. Queued via Azure Queue Storage
-3. Picked up by a Queue Trigger Function for processing (e.g., price check, notifications)
+**Endpoint:**
+`GET /api/unsubscribe?email={email}&url={url}`
+
+**Response:**
+Plaintext confirmation message.
+
+---
+
+## Workflow Overview
+
+1. Submission stored in Table Storage.
+2. Enqueued to Queue Storage.
+3. Queue-triggered function handles processing.
+4. Logic App sends notification if conditions are met.
+5. Optional unsubscribe flow removes matching table entry.
 
 ---
 
 ## Tech Stack
 
-- **.NET 8 Azure Functions** – Isolated process model
-- **Azure Storage (Table + Queue)** – Simple, cost-effective persistence
-- **Azure Logic Apps** – Email alerts using SendGrid
-- **Blazor WebAssembly + SignalR** – Real-time updates and dashboards
-- **GitHub Actions** – Push-to-deploy CI/CD pipeline
+- Azure Functions (.NET 8 Isolated)
+- Azure Table & Queue Storage
+- Logic Apps + SendGrid
+- CI/CD with GitHub Actions
 
 ---
 
 ## Price Checking Logic
 
-Each product is routed through a store-specific implementation of `IPriceChecker`.
-Currently supported: `Amazon` (mocked).
+Each URL is routed via an IPriceChecker implementation.
 
-The factory pattern allows for scalable resolution based on the product URL.
+- Amazon currently supported (mocked for testing).
+- Easily extendable via the factory pattern for additional retailers.
 
 ---
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE.txt).

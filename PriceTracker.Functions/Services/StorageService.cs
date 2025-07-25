@@ -30,11 +30,12 @@ public class StorageService
 
     public async Task RemoveSubscriptionAsync(string email, string productUrl)
     {
-        var entity = new ProductSubscriptionEntity
+        var results = _tableClient.QueryAsync<ProductSubscriptionEntity>(e =>
+            e.Email == email && e.ProductUrl == productUrl);
+
+        await foreach (var entity in results)
         {
-            Email = email,
-            ProductUrl = productUrl
-        };
-        await _tableClient.DeleteEntityAsync(entity);
+            await _tableClient.DeleteEntityAsync(entity.PartitionKey, entity.RowKey);
+        }
     }
 }
