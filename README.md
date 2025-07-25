@@ -26,6 +26,7 @@ This project demonstrates a modern serverless application using:
 | Queue Storage integration           | ✅ Working |
 | Queue Trigger Function              | ✅ Working |
 | Logic App email flow                | ✅ Working |
+| CI/CD Pipeline                      | ⏳ Next up |
 | Blazor WASM frontend (SignalR)      | ⏳ Planned |
 
 ---
